@@ -28,6 +28,19 @@ def init_db():
     """)
     conn.commit()
 
+def register_user(username):
+    conn = db_connection()
+    cursor = conn.cursor()
+    try:
+        cursor.execute("INSERT INTO users (username) VALUES (?)", (username,))
+        conn.commit()
+        return True
+    except sqlite3.IntegrityError as e:  # Handling the exception if username is not unique
+        st.error(f"Error: A user with the username '{username}' already exists.")
+        return False
+    finally:
+        conn.close()
+
 # Define functions for each screen
 def welcome_screen():
     st.title('Welcome to the Mario Kart Ranking App')
@@ -40,8 +53,8 @@ def register_user_screen():
         new_username = st.text_input("Enter a new username to register:")
         submit_button = st.form_submit_button("Register")
         if submit_button:
-            register_user(new_username)
-            st.success("User registered successfully")
+            if register_user(new_username):
+                st.success("User registered successfully")
     if st.button('Go to Choose Game Master'):
         st.session_state.current_screen = 'choose_master'
 
