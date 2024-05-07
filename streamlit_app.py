@@ -1,40 +1,83 @@
-import altair as alt
-import numpy as np
-import pandas as pd
 import streamlit as st
+import sqlite3
+import pandas as pd
 
-"""
-# Welcome to Streamlit!
+# Database Connection
+def db_connection():
+    conn = sqlite3.connect('mario_kart.db', check_same_thread=False)
+    return conn
 
-Edit `/streamlit_app.py` to customize this app to your heart's desire :heart:.
-If you have any questions, checkout our [documentation](https://docs.streamlit.io) and [community
-forums](https://discuss.streamlit.io).
+# Initialize Database
+def init_db():
+    conn = db_connection()
+    cursor = conn.cursor()
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS users (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            username TEXT UNIQUE NOT NULL
+        );
+    """)
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS results (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            username TEXT NOT NULL,
+            position INTEGER NOT NULL,
+            points INTEGER NOT NULL,
+            FOREIGN KEY(username) REFERENCES users(username)
+        );
+    """)
+    conn.commit()
 
-In the meantime, below is an example of what you can do with just a few lines of code:
-"""
+# Define functions for each screen
+def welcome_screen():
+    st.title('Welcome to the Mario Kart Ranking App')
+    if st.button('Go to Registration'):
+        st.session_state.current_screen = 'register'
 
-num_points = st.slider("Number of points in spiral", 1, 10000, 1100)
-num_turns = st.slider("Number of turns in spiral", 1, 300, 31)
+def register_user_screen():
+    st.title('Register a New User')
+    with st.form("register_user"):
+        new_username = st.text_input("Enter a new username to register:")
+        submit_button = st.form_submit_button("Register")
+        if submit_button:
+            register_user(new_username)
+            st.success("User registered successfully")
+    if st.button('Go to Choose Game Master'):
+        st.session_state.current_screen = 'choose_master'
 
-indices = np.linspace(0, 1, num_points)
-theta = 2 * np.pi * num_turns * indices
-radius = indices
+def choose_game_master_screen():
+    st.title('Choose the Game Master')
+    st.write('Placeholder for choosing the game master.')
+    if st.button('Go to Add Race Results'):
+        st.session_state.current_screen = 'add_results'
 
-x = radius * np.cos(theta)
-y = radius * np.sin(theta)
+def add_race_result_screen():
+    st.title('Add Race Results')
+    st.write('Placeholder for adding race results.')
+    if st.button('View Leaderboard'):
+        st.session_state.current_screen = 'view_leaderboard'
 
-df = pd.DataFrame({
-    "x": x,
-    "y": y,
-    "idx": indices,
-    "rand": np.random.randn(num_points),
-})
+def view_leaderboard_screen():
+    st.title('View Leaderboard')
+    st.write('Placeholder for leaderboard display.')
+    if st.button('Back to Welcome'):
+        st.session_state.current_screen = 'welcome'
 
-st.altair_chart(alt.Chart(df, height=700, width=700)
-    .mark_point(filled=True)
-    .encode(
-        x=alt.X("x", axis=None),
-        y=alt.Y("y", axis=None),
-        color=alt.Color("idx", legend=None, scale=alt.Scale()),
-        size=alt.Size("rand", legend=None, scale=alt.Scale(range=[1, 150])),
-    ))
+# Set default screen if not set
+if 'current_screen' not in st.session_state:
+    st.session_state.current_screen = 'welcome'
+
+# Display the current screen
+if st.session_state.current_screen == 'welcome':
+    welcome_screen()
+elif st.session_state.current_screen == 'register':
+    register_user_screen()
+elif st.session_state.current_screen == 'choose_master':
+    choose_game_master_screen()
+elif st.session_state.current_screen == 'add_results':
+    add_race_result_screen()
+elif st.session_state.current_screen == 'view_leaderboard':
+    view_leaderboard_screen()
+
+# Initialize the database
+init_db()
