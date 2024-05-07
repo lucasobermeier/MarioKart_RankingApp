@@ -2,12 +2,12 @@ import streamlit as st
 import sqlite3
 import pandas as pd
 
-# Database Connection
+# Database connection setup
 def db_connection():
     conn = sqlite3.connect('mario_kart.db', check_same_thread=False)
     return conn
 
-# Initialize Database
+# Initialize the database with necessary tables
 def init_db():
     conn = db_connection()
     cursor = conn.cursor()
@@ -27,7 +27,9 @@ def init_db():
         );
     """)
     conn.commit()
+    conn.close()
 
+# Register a new user in the database
 def register_user(username):
     conn = db_connection()
     cursor = conn.cursor()
@@ -35,13 +37,13 @@ def register_user(username):
         cursor.execute("INSERT INTO users (username) VALUES (?)", (username,))
         conn.commit()
         return True
-    except sqlite3.IntegrityError as e:  # Handling the exception if username is not unique
+    except sqlite3.IntegrityError:
         st.error(f"Error: A user with the username '{username}' already exists.")
         return False
     finally:
         conn.close()
 
-# Define functions for each screen
+# Function definitions for each screen in the app
 def welcome_screen():
     st.title('Welcome to the Mario Kart Ranking App')
     if st.button('Go to Registration'):
@@ -76,11 +78,11 @@ def view_leaderboard_screen():
     if st.button('Back to Welcome'):
         st.session_state.current_screen = 'welcome'
 
-# Set default screen if not set
+# Initialize the app state if not already done
 if 'current_screen' not in st.session_state:
     st.session_state.current_screen = 'welcome'
 
-# Display the current screen
+# Render the current screen based on the state
 if st.session_state.current_screen == 'welcome':
     welcome_screen()
 elif st.session_state.current_screen == 'register':
@@ -92,5 +94,5 @@ elif st.session_state.current_screen == 'add_results':
 elif st.session_state.current_screen == 'view_leaderboard':
     view_leaderboard_screen()
 
-# Initialize the database
+# Ensure the database is initialized at least once
 init_db()
