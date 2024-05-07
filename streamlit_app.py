@@ -3,6 +3,10 @@ import sqlite3
 import pandas as pd
 import random
 
+points_dict = {
+    1: 15, 2: 12, 3: 10, 4: 8, 5: 7, 6: 6, 7: 5, 8: 4, 9: 3, 10: 2, 11: 1, 12: 0
+}
+
 # Database connection setup
 def db_connection():
     conn = sqlite3.connect('mario_kart.db', check_same_thread=False)
