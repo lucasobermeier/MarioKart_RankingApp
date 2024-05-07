@@ -88,7 +88,43 @@ def choose_game_master_screen():
 
 def add_race_result_screen():
     st.title('Add Race Results')
-    st.write('Placeholder for adding race results.')
+
+    # Setting up the number of races if not already defined
+    if 'total_races' not in st.session_state:
+        st.session_state.total_races = st.number_input("Enter number of races", min_value=1, max_value=10, value=3, step=1)
+        st.session_state.current_race = 1
+        st.session_state.race_results = []
+
+    if 'total_races' in st.session_state and st.session_state.current_race <= st.session_state.total_races:
+        race_number = st.session_state.current_race
+        st.header(f'Race {race_number}: Results')
+
+        # Fetch users
+        users = fetch_users()
+        if not users:
+            st.error("No users registered. Please register users first.")
+            return
+        
+        # User placement inputs
+        placements = {user: st.selectbox(f"Select place for {user}:", range(1, 13), key=user) for user in users}
+        
+        if st.button(f'Submit Results for Race {race_number}'):
+            # Store results
+            for user, placement in placements.items():
+                st.session_state.race_results.append({
+                    'race_number': race_number,
+                    'username': user,
+                    'position': placement,
+                    'points': points_dict[placement]
+                })
+            st.success(f"Results for Race {race_number} submitted successfully.")
+            
+            # Move to the next race or finish
+            if race_number < st.session_state.total_races:
+                st.session_state.current_race += 1
+            else:
+                st.session_state.current_screen = 'view_leaderboard'
+
     if st.button('View Leaderboard'):
         st.session_state.current_screen = 'view_leaderboard'
 
