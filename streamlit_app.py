@@ -1,6 +1,7 @@
 import streamlit as st
 import sqlite3
 import pandas as pd
+import random
 
 # Database connection setup
 def db_connection():
@@ -60,9 +61,28 @@ def register_user_screen():
     if st.button('Go to Choose Game Master'):
         st.session_state.current_screen = 'choose_master'
 
+
+def fetch_users():
+    conn = db_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT username FROM users")
+    users = [row[0] for row in cursor.fetchall()]
+    conn.close()
+    return users
+
 def choose_game_master_screen():
     st.title('Choose the Game Master')
-    st.write('Placeholder for choosing the game master.')
+    
+    users = fetch_users()
+    if not users:
+        st.write('No registered users found. Please register some users first.')
+        return
+
+    if 'game_master' not in st.session_state or st.button('Choose a new Game Master'):
+        st.session_state.game_master = random.choice(users)
+        
+    st.write(f"The chosen Game Master is: {st.session_state.game_master}")
+    
     if st.button('Go to Add Race Results'):
         st.session_state.current_screen = 'add_results'
 
