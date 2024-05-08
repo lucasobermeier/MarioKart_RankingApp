@@ -74,22 +74,6 @@ def fetch_users():
     conn.close()
     return users
 
-def choose_game_master_screen():
-    st.title('Choose the Game Master')
-    
-    users = fetch_users()
-    if not users:
-        st.write('No registered users found. Please register some users first.')
-        return
-
-    if 'game_master' not in st.session_state or st.button('Choose a new Game Master'):
-        st.session_state.game_master = random.choice(users)
-        
-    st.write(f"The chosen Game Master is: {st.session_state.game_master}")
-    
-    if st.button('Go to Add Race Results'):
-        st.session_state.current_screen = 'add_results'
-
 def add_race_result_screen():
     st.title('Add Race Results')
 
