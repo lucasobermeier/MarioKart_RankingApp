@@ -11,6 +11,11 @@ points_dict = {
 users = []
 race_results = []
 
+def welcome_screen():
+    st.title('Welcome to the Mario Kart Ranking App')
+    if st.button('Go to Registration'):
+        st.session_state.current_screen = 'register'
+
 def register_user(username):
     if username not in users:
         users.append(username)
