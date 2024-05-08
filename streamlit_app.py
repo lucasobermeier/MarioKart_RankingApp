@@ -29,18 +29,7 @@ def register_user_screen():
     if st.button("Register"):
         if register_user(new_username):
             st.success("User registered successfully")
-            st.session_state.current_screen = 'choose_master'
-
-def choose_game_master_screen():
-    st.title('Choose the Game Master')
-    if users:
-        if 'game_master' not in st.session_state or st.button('Choose a new Game Master'):
-            st.session_state.game_master = random.choice(users)
-        st.write(f"The chosen Game Master is: {st.session_state.game_master}")
-        if st.button('Go to Add Race Results'):
             st.session_state.current_screen = 'add_results'
-    else:
-        st.error("No users registered. Please register some users first.")
 
 def add_race_result_screen():
     st.title('Add Race Results')
@@ -75,7 +64,7 @@ def view_leaderboard_screen():
         st.session_state.pop('total_races', None)
         st.session_state.pop('current_race', None)
         st.session_state.pop('race_results', None)
-        st.session_state.pop('game_master', None)
+        st.session_state.pop('game_master', None, None)
         users.clear()
         st.session_state.current_screen = 'welcome'
     if st.button('Quit Game'):
@@ -90,8 +79,6 @@ if st.session_state.current_screen == 'welcome':
     welcome_screen()
 elif st.session_state.current_screen == 'register':
     register_user_screen()
-elif st.session_state.current_screen == 'choose_master':
-    choose_game_master_screen()
 elif st.session_state.current_screen == 'add_results':
     add_race_result_screen()
 elif st.session_state.current_screen == 'view_leaderboard':
