@@ -116,9 +116,41 @@ def add_race_result_screen():
     if st.button('View Leaderboard'):
         st.session_state.current_screen = 'view_leaderboard'
 
+def calculate_total_points():
+    # Aggregate points for each user
+    df = pd.DataFrame(st.session_state.race_results)
+    leaderboard_df = df.groupby('username', as_index=False)['points'].sum()
+    leaderboard_df.sort_values(by='points', ascending=False, inplace=True)
+    
+    # Assign ranks, handling ties appropriately
+    leaderboard_df['rank'] = leaderboard_df['points'].rank(method='min', ascending=False)
+    return leaderboard_df
+
 def view_leaderboard_screen():
     st.title('View Leaderboard')
-    st.write('Placeholder for leaderboard display.')
+    
+    # Calculate and display the leaderboard
+    leaderboard_df = calculate_total_points()
+    # Color the top three rows
+    def color_top_three(val):
+        color = 'yellow' if val == 1 else 'silver' if val == 2 else 'bronze' if val == 3 else ''
+        return f'background-color: {color}'
+
+    st.dataframe(leaderboard_df.style.applymap(color_top_three, subset=['rank']))
+    
+    # Reset and quit buttons
+    col1, col2 = st.columns(2)
+    with col1:
+        if st.button('Reset Game'):
+            # Resetting the game should clear session states and set up for a new game
+            st.session_state.pop('total_races', None)
+            st.session_state.pop('current_race', None)
+            st.session_state.pop('race_results', None)
+            st.session_state.current_screen = 'welcome'
+    with col2:
+        if st.button('Quit Game'):
+            st.session_state.current_screen = 'welcome'
+
     if st.button('Back to Welcome'):
         st.session_state.current_screen = 'welcome'
 
