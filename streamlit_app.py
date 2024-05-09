@@ -11,12 +11,14 @@ points_dict = {
 }
 
 def add_custom_css():
-    st.markdown(
-        """
+      st.markdown(
+        f"""
         <style>
-        .stApp {
-            background-color: #ADD8E6;  # Hellblau als Beispiel
-        }
+        .stApp {{
+            background-image: url("https://pliki.ppe.pl/storage/39653022149bea4f5935/39653022149bea4f5935-1200w.jpg");
+            background-size: cover;
+            background-position: center;
+        }}
         </style>
         """,
         unsafe_allow_html=True
