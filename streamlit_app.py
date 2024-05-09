@@ -21,7 +21,7 @@ def add_bg_and_custom_css():
             background-position: center;
         }
         .text-container {
-            background-color: rgba(255, 255, 255, 0.2);  # Weiß mit 50% Transparenz
+            background-color: rgba(255, 255, 255, 0.8);
             border-radius: 10px;
             padding: 10px;
         }
