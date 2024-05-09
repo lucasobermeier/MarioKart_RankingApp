@@ -42,7 +42,14 @@ def add_race_result_screen():
         st.header(f'Race {race_number}: Results')
         placements = {user: st.selectbox(f"Select place for {user}:", range(1, 13), key=f"{user}{race_number}") for user in users}
         if st.button(f'Submit Results for Race {race_number}'):
-            race_results.append({user: points_dict[placement] for user, placement in placements.items()})
+            # Corrected data collection to include race number in the result
+            for user, placement in placements.items():
+                race_results.append({
+                    'race_number': race_number,
+                    'username': user,
+                    'position': placement,
+                    'points': points_dict[placement]
+                })
             st.success(f"Results for Race {race_number} submitted successfully.")
             if race_number < st.session_state.total_races:
                 st.session_state.current_race += 1
@@ -51,9 +58,10 @@ def add_race_result_screen():
 
 def calculate_total_points():
     df = pd.DataFrame(race_results)
-    leaderboard_df = df.sum().sort_values(by='points', ascending=False).reset_index()
-    leaderboard_df.columns = ['Username', 'Total Points']
-    leaderboard_df['Rank'] = leaderboard_df['Total Points'].rank(method='min', ascending=False)
+    # Ensuring the DataFrame is properly aggregated
+    leaderboard_df = df.groupby('username')['points'].sum().reset_index()
+    leaderboard_df.sort_values(by='points', ascending=False, inplace=True)
+    leaderboard_df['Rank'] = leaderboard_df['points'].rank(method='min', ascending=False)
     return leaderboard_df
 
 def view_leaderboard_screen():
