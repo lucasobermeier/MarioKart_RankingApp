@@ -33,8 +33,20 @@ def add_bg_and_custom_css():
         unsafe_allow_html=True
     )
 
-
-
+def add_bg(): 
+    st.markdown(
+        """
+        <style>
+        .stApp {
+            background-image: url("https://img.freepik.com/free-photo/2d-graphic-wallpaper-with-colorful-grainy-gradients_23-2151001521.jpg");
+            background-size: cover;
+            background-position: center;
+        }
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+    
 def welcome_screen():
     add_bg_and_custom_css()
     st.title('Mario Kart: The Ranking App')
