@@ -1,4 +1,4 @@
-import streamlit as st
+erimport streamlit as st
 import pandas as pd
 import random
 
@@ -90,7 +90,7 @@ def register_user_screen():
     
     # Display registered users table only once and always
     if st.session_state.users:
-        st.write("Registered Users:")
+        st.header("Registered Users:")
         user_df = pd.DataFrame(st.session_state.users, columns=["Username"])
         st.table(user_df)
 
@@ -137,13 +137,13 @@ def add_race_result_screen():
             if race_number < st.session_state.total_races:
                 st.session_state.current_race += 1
             else:
-                #add button for finish game
-                st.session_state.current_screen = 'view_leaderboard'
+                if st.button ('View Final Result'):
+                    st.session_state.current_screen = 'view_leaderboard'
     else:
         st.error("Please set the total number of races first.")
     
-    if st.button('View Leaderboard'):
-        st.session_state.current_screen = 'view_leaderboard'
+    # if st.button('View Leaderboard'):
+    #    st.session_state.current_screen = 'view_leaderboard'
 
 # Initialize session state for race results if not already done
 if 'race_results' not in st.session_state:
