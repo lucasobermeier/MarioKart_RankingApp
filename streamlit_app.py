@@ -8,21 +8,27 @@ race_results = []  # List to store results of each race
 
 points_dict = {
     1: 15, 2: 12, 3: 10, 4: 8, 5: 7, 6: 6, 7: 5, 8: 4, 9: 3, 10: 2, 11: 1, 12: 0
-}
+} 
 
-def add_custom_css():
-      st.markdown(
-        f"""
+def add_bg_and_custom_css():
+    # Hintergrundbild und Stil für Textcontainer
+    st.markdown(
+        """
         <style>
-        .stApp {{
+        .stApp {
             background-image: url("https://pliki.ppe.pl/storage/39653022149bea4f5935/39653022149bea4f5935-1200w.jpg");
             background-size: cover;
-            background-position: center;
-        }}
+        }
+        .text-container {
+            background-color: rgba(255, 255, 255, 0.5);  # Weiß mit 50% Transparenz
+            border-radius: 10px;
+            padding: 10px;
+        }
         </style>
         """,
         unsafe_allow_html=True
     )
+
 
 def welcome_screen():
     add_custom_css()
