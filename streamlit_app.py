@@ -31,7 +31,7 @@ def add_bg_and_custom_css():
 
 
 def welcome_screen():
-    add_custom_css()
+    add_bg_and_custom_css()
     st.title('Mario Kart: The Ranking App')
     
     #app description
