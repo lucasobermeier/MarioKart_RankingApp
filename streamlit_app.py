@@ -47,7 +47,7 @@ def register_user_screen():
             st.error("Please register at least one user before starting the race.")
 
 def add_race_result_screen():
-    st.title('Add Race Results')
+    st.title('Race Results:')
 
     # Setting up the number of races with a confirmation button
     if 'total_races' not in st.session_state:
@@ -98,7 +98,7 @@ def calculate_total_points():
         if 'username' in df.columns and 'points' in df.columns:  # Ensure the expected columns are present
             leaderboard_df = df.groupby('username')['points'].sum().reset_index()
             leaderboard_df.sort_values(by='points', ascending=False, inplace=True)
-            leaderboard_df['Rank'] = leaderboard_df['points'].rank(method='min', ascending=False)
+            leaderboard_df['rank'] = leaderboard_df['points'].rank(method='min', ascending=False)
             return leaderboard_df
         else:
             st.error("Expected data columns missing in the race results.")
@@ -108,7 +108,7 @@ def calculate_total_points():
         return pd.DataFrame(columns=['Username', 'Total Points', 'Rank'])
 
 def view_leaderboard_screen():
-    st.title('View Leaderboard')
+    st.title('Final Leaderboard')
     leaderboard_df = calculate_total_points()
     st.table(leaderboard_df)
     if st.button('Reset Game'):
