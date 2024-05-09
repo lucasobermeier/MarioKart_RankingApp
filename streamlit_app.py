@@ -11,7 +11,7 @@ points_dict = {
 } 
 
 def add_bg_and_custom_css():
-    # Adding background image and custom styles for text container, plus image transparency adjustment
+    # Adjusting the background image and text container styles with an updated overlay setup
     st.markdown(
         """
         <style>
@@ -19,10 +19,10 @@ def add_bg_and_custom_css():
             background-image: url("https://pliki.ppe.pl/storage/39653022149bea4f5935/39653022149bea4f5935-1200w.jpg");
             background-size: cover;
             background-position: center;
-            position: relative;  /* Necessary for positioning the before pseudo-element */
+            position: relative;  /* Essential for the overlay to work correctly */
         }
 
-        /* Adding an overlay to reduce the image intensity for better readability */
+        /* Correcting the overlay to ensure it does not cover content */
         .stApp:before {
             content: "";
             position: absolute;
@@ -30,20 +30,23 @@ def add_bg_and_custom_css():
             left: 0;
             right: 0;
             bottom: 0;
-            background-color: rgba(255, 255, 255, 0.5);  /* White overlay with 50% transparency */
-            z-index: -1;  /* Ensures the overlay is under the content but above the background image */
+            background-color: rgba(255, 255, 255, 0.5);  /* Semi-transparent white overlay */
+            z-index: 0;  /* Setting z-index to 0 or below content z-index */
         }
 
         .text-container {
-            background-color: rgba(255, 255, 255, 0.9);  /* Semi-transparent white for text container */
+            background-color: rgba(255, 255, 255, 0.9);
             border-radius: 15px;
             padding: 25px;
-            margin-bottom: 30px;  /* Space between text container and other elements */
+            margin-bottom: 30px;
+            position: relative;  /* Ensure the text container is above the overlay */
+            z-index: 1;  /* Ensuring content is above the overlay */
         }
         </style>
         """,
         unsafe_allow_html=True
     )
+
 
 
 def welcome_screen():
