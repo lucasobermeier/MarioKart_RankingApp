@@ -63,20 +63,20 @@ def register_user_screen():
     add_bg_and_custom_css()  # Ensure this calls the function that sets the background image
     
     # Adding custom CSS for text input and table styling
-     st.markdown("""
-        <style>
-        /* Increasing font size and changing color for all labels */
-        .css-1gyuw4i, .css-1d391kg label {
-            font-size: 20px;
-            color: black;
-        }
-        
-        /* Specific styling for Streamlit Dataframe output */
-        .dataframe-container .stDataFrame {
-            background-color: white;  /* Ensuring this targets Streamlit tables specifically */
-        }
-        </style>
-        """, unsafe_allow_html=True)
+    st.markdown("""
+    <style>
+    /* Increasing font size and changing color for all labels */
+    .css-1gyuw4i, .css-1d391kg label {
+        font-size: 20px;
+        color: black;
+    }
+    
+    /* Specific styling for Streamlit Dataframe output */
+    .dataframe-container .stDataFrame {
+        background-color: white;  /* Ensuring this targets Streamlit tables specifically */
+    }
+    </style>
+    """, unsafe_allow_html=True)
 
     st.title('Register a New User')
     new_username = st.text_input("Enter a new username to register:")
