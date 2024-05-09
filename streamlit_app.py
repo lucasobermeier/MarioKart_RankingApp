@@ -31,7 +31,7 @@ def add_bg_and_custom_css():
             right: 0;
             bottom: 0;
             background-color: rgba(255, 255, 255, 0.5);  /* Semi-transparent white overlay */
-            z-index: 0;  /* Setting z-index to 0 or below content z-index */
+            z-index: -1;  /* Setting z-index to 0 or below content z-index */
         }
 
         .text-container {
