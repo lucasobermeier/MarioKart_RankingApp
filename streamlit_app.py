@@ -64,8 +64,8 @@ def welcome_screen():
         </div>
     """, unsafe_allow_html=True)
     
-    if st.button('Go to Registration'):
-        st.session_state.current_screen = 'register'
+    st.button('Go to Registration')
+    st.session_state.current_screen = 'register'
         
 def register_user(username):
     if username not in st.session_state.users:
