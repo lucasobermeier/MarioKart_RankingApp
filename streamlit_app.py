@@ -9,14 +9,15 @@ race_results = []  # List to store results of each race
 points_dict = {
     1: 15, 2: 12, 3: 10, 4: 8, 5: 7, 6: 6, 7: 5, 8: 4, 9: 3, 10: 2, 11: 1, 12: 0
 }
+
 def welcome_screen():
     st.title('Welcome to the Mario Kart Ranking App')
-    if st.button('Register all Players'):
+    if st.button('Go to Registration'):
         st.session_state.current_screen = 'register'
         
 def register_user(username):
-    if username not in users:
-        users.append(username)
+    if username not in st.session_state.users:
+        st.session_state.users.append(username)
         return True
     else:
         st.error(f"Error: A user with the username '{username}' already exists.")
