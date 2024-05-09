@@ -79,7 +79,8 @@ def register_user_screen():
     add_bg()   # Ensure this calls the function that sets the background image
     
     st.title('Register a New User')
-    new_username = st.text_input("Enter a new username to register:")
+    st.header('Enter a new username to register:')
+    new_username = st.text_input("")
     register_button = st.button("Register")
     start_racing_button = st.button("Let's start racing")
 
@@ -136,10 +137,11 @@ def add_race_result_screen():
             if race_number < st.session_state.total_races:
                 st.session_state.current_race += 1
             else:
+                #add button for finish game
                 st.session_state.current_screen = 'view_leaderboard'
     else:
         st.error("Please set the total number of races first.")
-
+    
     if st.button('View Leaderboard'):
         st.session_state.current_screen = 'view_leaderboard'
 
