@@ -11,7 +11,7 @@ points_dict = {
 } 
 
 def add_bg_and_custom_css():
-    # Hintergrundbild und Stil für Textcontainer
+    # Adding background image and custom styles for text container, plus image transparency adjustment
     st.markdown(
         """
         <style>
@@ -19,17 +19,32 @@ def add_bg_and_custom_css():
             background-image: url("https://pliki.ppe.pl/storage/39653022149bea4f5935/39653022149bea4f5935-1200w.jpg");
             background-size: cover;
             background-position: center;
+            position: relative;  /* Necessary for positioning the before pseudo-element */
         }
+
+        /* Adding an overlay to reduce the image intensity for better readability */
+        .stApp:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(255, 255, 255, 0.5);  /* White overlay with 50% transparency */
+            z-index: -1;  /* Ensures the overlay is under the content but above the background image */
+        }
+
         .text-container {
-            background-color: rgba(255, 255, 255, 0.9);
+            background-color: rgba(255, 255, 255, 0.9);  /* Semi-transparent white for text container */
             border-radius: 15px;
             padding: 25px;
-            margin-bottom: 30px;
+            margin-bottom: 30px;  /* Space between text container and other elements */
         }
         </style>
         """,
         unsafe_allow_html=True
     )
+
 
 def welcome_screen():
     add_bg_and_custom_css()
@@ -70,14 +85,6 @@ def register_user_screen():
     if register_button:
         if register_user(new_username):
             st.success("User registered successfully")
-
-    st.markdown("""
-    <style>
-    .stTable {
-        background-color: white;  /* Set the background color for tables specifically */
-    }
-    </style>
-    """, unsafe_allow_html=True)
     
     # Display registered users table only once and always
     if st.session_state.users:
