@@ -61,27 +61,58 @@ def register_user(username):
 
 def register_user_screen():
     add_bg_and_custom_css()
-    st.title('Register a New User')
-    new_username = st.text_input("Enter a new username to register:")
-    register_button = st.button("Register")
-    start_racing_button = st.button("Let's start racing")
+    st.markdown("""
+        <div class="text-container">
+            <h1>Register a New User</h1>
+            <input type="text" id="username" placeholder="Enter a new username to register">
+            <button onclick="handleRegister()">Register</button>
+            <button onclick="startRacing()">Let's start racing</button>
+        </div>
+    """, unsafe_allow_html=True)
 
-    if register_button:
+    # Event handlers in JavaScript to manage registration and navigation
+    st.markdown("""
+        <script>
+            function handleRegister() {
+                const username = document.getElementById('username').value;
+                window.parent.postMessage({
+                    type: 'streamlit:setComponentValue',
+                    args: {data: username},
+                    key: 'new_username'
+                }, '*');
+            }
+            
+            function startRacing() {
+                window.parent.postMessage({
+                    type: 'streamlit:setComponentValue',
+                    args: {data: true},
+                    key: 'start_racing'
+                }, '*');
+            }
+        </script>
+    """, unsafe_allow_html=True)
+
+    new_username = st.session_state.get('new_username', '')
+    start_racing = st.session_state.get('start_racing', False)
+
+    if new_username:
         if register_user(new_username):
             st.success("User registered successfully")
+            st.session_state['new_username'] = ''  # Reset the input after successful registration
 
     # Display registered users table only once and always
     if st.session_state.users:
-        st.write("Registered Users:")
+        st.markdown("Registered Users:", unsafe_allow_html=True)
         user_df = pd.DataFrame(st.session_state.users, columns=["Username"])
         st.table(user_df)
 
     # Allow moving to the next screen only if there are users registered
-    if start_racing_button:
+    if start_racing:
         if st.session_state.users:
             st.session_state.current_screen = 'add_results'
         else:
             st.error("Please register at least one user before starting the race.")
+
 
 def add_race_result_screen():
     add_bg_and_custom_css()
