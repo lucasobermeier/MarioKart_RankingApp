@@ -62,22 +62,6 @@ def register_user(username):
 def register_user_screen():
     add_bg_and_custom_css()  # Ensure this calls the function that sets the background image
     
-    # Adding custom CSS for text input and table styling
-    st.markdown("""
-    <style>
-    /* Increasing font size and changing color for all labels */
-    .css-1gyuw4i, .css-1d391kg label {
-        font-size: 20px;
-        color: black;
-    }
-    
-    /* Specific styling for Streamlit Dataframe output */
-    .dataframe-container .stDataFrame {
-        background-color: white;  /* Ensuring this targets Streamlit tables specifically */
-    }
-    </style>
-    """, unsafe_allow_html=True)
-
     st.title('Register a New User')
     new_username = st.text_input("Enter a new username to register:")
     register_button = st.button("Register")
@@ -87,6 +71,14 @@ def register_user_screen():
         if register_user(new_username):
             st.success("User registered successfully")
 
+    st.markdown("""
+    <style>
+    .stTable {
+        background-color: white;  /* Set the background color for tables specifically */
+    }
+    </style>
+    """, unsafe_allow_html=True)
+    
     # Display registered users table only once and always
     if st.session_state.users:
         st.write("Registered Users:")
