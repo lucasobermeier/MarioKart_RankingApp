@@ -11,7 +11,19 @@ points_dict = {
 }
 
 def welcome_screen():
-    st.title('Welcome to the Mario Kart Ranking App')
+    st.title('Mario Kart: Ranking App')
+    
+    # Adding a description to the welcome screen
+    st.write("""
+    Welcome to the Mario Kart: Ranking App! This interactive application allows you to set up races, register players, and track race results in real-time. Here’s what you can do:
+    
+    - **Register Players**: Add participants to the race and manage your player list.
+    - **Record Race Results**: After each race, input the results to see who's leading.
+    - **View Leaderboard**: Check out the leaderboard to see rankings and find out who's on top in the Mario Kart championship.
+    
+    Whether you're hosting a Mario Kart tournament or just having fun with friends, this app will make managing and displaying results easy and fun. Get started by registering players and let the races begin!
+    """)
+    
     if st.button('Go to Registration'):
         st.session_state.current_screen = 'register'
         
