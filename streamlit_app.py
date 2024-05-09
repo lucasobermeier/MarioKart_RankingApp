@@ -48,41 +48,42 @@ def register_user_screen():
 
 def add_race_result_screen():
     st.title('Add Race Results')
-    
+
     # Setting up the number of races with a confirmation button
     if 'total_races' not in st.session_state:
-        st.session_state.total_races = st.number_input("Enter number of races", min_value=1, max_value=10, value=3, step=1)
+        # This initial setup will only ask for the number of races if not yet defined
+        races_input = st.number_input("Enter number of races", min_value=1, max_value=10, value=3, step=1)
         if st.button('Start Racing'):
-            st.session_state.current_race = 1
-            st.session_state.current_screen = 'add_results'
-        return
+            st.session_state.total_races = races_input
+            st.session_state.current_race = 1  # Initializing the current race here after confirmation
+        return  # Return early to avoid executing further logic until 'Start Racing' is clicked
 
-    if 'total_races' in st.session_state and st.session_state.current_race <= st.session_state.total_races:
+    # Ensuring current_race is defined before trying to access it
+    if 'current_race' in st.session_state and st.session_state.current_race <= st.session_state.total_races:
         race_number = st.session_state.current_race
         st.header(f'Race {race_number}: Results')
 
-        # Fetch users and create dropdowns for their placements
-        if st.session_state.users:
-            placements = {user: st.selectbox(f"Select place for {user}:", range(1, 13), key=f"{user}{race_number}") for user in st.session_state.users}
+        # User placement inputs
+        placements = {user: st.selectbox(f"Select place for {user}:", range(1, 13), key=f"{user}_{race_number}") for user in st.session_state.users}
+        
+        if st.button(f'Submit Results for Race {race_number}'):
+            # Store results for each user
+            for user, placement in placements.items():
+                st.session_state.race_results.append({
+                    'race_number': race_number,
+                    'username': user,
+                    'position': placement,
+                    'points': points_dict[placement]
+                })
+            st.success(f"Results for Race {race_number} submitted successfully.")
             
-            if st.button(f'Submit Results for Race {race_number}'):
-                # Store results
-                for user, placement in placements.items():
-                    st.session_state.race_results.append({
-                        'race_number': race_number,
-                        'username': user,
-                        'position': placement,
-                        'points': points_dict[placement]
-                    })
-                st.success(f"Results for Race {race_number} submitted successfully.")
-                
-                # Move to the next race or finish
-                if race_number < st.session_state.total_races:
-                    st.session_state.current_race += 1
-                else:
-                    st.session_state.current_screen = 'view_leaderboard'
-        else:
-            st.error("No users registered. Please register users first.")
+            # Move to the next race or finish
+            if race_number < st.session_state.total_races:
+                st.session_state.current_race += 1
+            else:
+                st.session_state.current_screen = 'view_leaderboard'
+    else:
+        st.error("Please set the total number of races first.")
 
     if st.button('View Leaderboard'):
         st.session_state.current_screen = 'view_leaderboard'
