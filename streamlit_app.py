@@ -23,7 +23,7 @@ def add_bg_and_custom_css():
         .text-container {
             background-color: rgba(255, 255, 255, 0.9);
             border-radius: 15px;
-            padding: 15px;
+            padding: 25px;
         }
         </style>
         """,
