@@ -33,15 +33,14 @@ def register_user_screen():
             st.success("User registered successfully")
 
     # Display registered users table only once and always
-    if users:
+    if st.session_state.users:
         st.write("Registered Users:")
-        # Convert list to a DataFrame for better display
-        user_df = pd.DataFrame(users, columns=["Username"])
+        user_df = pd.DataFrame(st.session_state.users, columns=["Username"])
         st.table(user_df)
 
     # Allow moving to the next screen only if there are users registered
     if start_racing_button:
-        if users:
+        if st.session_state.users:
             st.session_state.current_screen = 'add_results'
         else:
             st.error("Please register at least one user before starting the race.")
@@ -92,6 +91,10 @@ def view_leaderboard_screen():
         st.session_state.current_screen = 'welcome'
     if st.button('Quit Game'):
         st.session_state.current_screen = 'welcome'
+
+# Initialize session state for users list if it's not already initialized
+if 'users' not in st.session_state:
+    st.session_state.users = []
 
 # Initialize session state for navigation
 if 'current_screen' not in st.session_state:
