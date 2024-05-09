@@ -62,7 +62,7 @@ def register_user(username):
 def register_user_screen():
     add_bg_and_custom_css()
     st.title('Register a New User')
-    new_username = st.text_input("Enter a new username to register:")
+    new_username = st.text_input(st.title("Enter a new username to register:"))
     register_button = st.button("Register")
     start_racing_button = st.button("Let's start racing")
 
