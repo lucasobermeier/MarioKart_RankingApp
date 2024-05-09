@@ -137,8 +137,8 @@ def add_race_result_screen():
             if race_number < st.session_state.total_races:
                 st.session_state.current_race += 1
             else:
-                if st.button ('View Final Result'):
-                    st.session_state.current_screen = 'view_leaderboard'
+                st.button ('View Final Result')
+                st.session_state.current_screen = 'view_leaderboard'
     else:
         st.error("Please set the total number of races first.")
     
