@@ -23,12 +23,28 @@ def register_user(username):
         return False
 
 def register_user_screen():
-    st.title('Register a New Player:')
+    st.title('Register a New User')
     new_username = st.text_input("Enter a new username to register:")
-    if st.button("Register"):
+    register_button = st.button("Register")
+    start_racing_button = st.button("Let's start racing")
+
+    if register_button:
         if register_user(new_username):
             st.success("User registered successfully")
+            # Display updated user list
+            st.write("Registered Users:")
+            st.table(users)  # This assumes 'users' is a list of usernames
+
+    # Display registered users table even if no new registration attempt
+    if users:
+        st.write("Registered Users:")
+        st.table(users)
+
+    if start_racing_button:
+        if users:  # Ensures there is at least one user
             st.session_state.current_screen = 'add_results'
+        else:
+            st.error("Please register at least one user before starting the race.")
 
 def add_race_result_screen():
     st.title('Add Race Results')
