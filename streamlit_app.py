@@ -60,7 +60,18 @@ def register_user(username):
         return False
 
 def register_user_screen():
-    add_bg_and_custom_css()
+    add_bg_and_custom_css() 
+    st.markdown(
+        """
+        <style>
+        label { font-size: 20px; }  /* Increases the font size for input label */
+        .stTextInput label { font-weight: bold; } /* Make the input label bold */
+        .stDataFrame { background-color: white; }  /* Set the background color for tables to white */
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+    
     st.title('Register a New User')
     new_username = st.text_input("Enter a new username to register:")
     register_button = st.button("Register")
