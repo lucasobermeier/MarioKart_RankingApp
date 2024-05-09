@@ -31,17 +31,17 @@ def register_user_screen():
     if register_button:
         if register_user(new_username):
             st.success("User registered successfully")
-            # Display updated user list
-            st.write("Registered Users:")
-            st.table(users)  # This assumes 'users' is a list of usernames
 
-    # Display registered users table even if no new registration attempt
+    # Display registered users table only once and always
     if users:
         st.write("Registered Users:")
-        st.table(users)
+        # Convert list to a DataFrame for better display
+        user_df = pd.DataFrame(users, columns=["Username"])
+        st.table(user_df)
 
+    # Allow moving to the next screen only if there are users registered
     if start_racing_button:
-        if users:  # Ensures there is at least one user
+        if users:
             st.session_state.current_screen = 'add_results'
         else:
             st.error("Please register at least one user before starting the race.")
