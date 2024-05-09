@@ -60,7 +60,7 @@ def register_user(username):
         return False
 
 def register_user_screen():
-    dd_bg_and_custom_css()
+    add_bg_and_custom_css()
     st.title('Register a New User')
     new_username = st.text_input("Enter a new username to register:")
     register_button = st.button("Register")
@@ -84,7 +84,7 @@ def register_user_screen():
             st.error("Please register at least one user before starting the race.")
 
 def add_race_result_screen():
-    dd_bg_and_custom_css()
+    add_bg_and_custom_css()
     st.title('Race Results:')
 
     # Setting up the number of races with a confirmation button
@@ -146,7 +146,7 @@ def calculate_total_points():
         return pd.DataFrame(columns=['Username', 'Total Points', 'Rank'])
 
 def view_leaderboard_screen():
-    dd_bg_and_custom_css()
+    add_bg_and_custom_css()
     st.title('Final Leaderboard')
     leaderboard_df = calculate_total_points()
     st.table(leaderboard_df)
