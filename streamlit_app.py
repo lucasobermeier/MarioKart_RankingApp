@@ -110,7 +110,7 @@ def calculate_total_points():
         if 'username' in df.columns and 'points' in df.columns:  # Ensure the expected columns are present
             leaderboard_df = df.groupby('username')['points'].sum().reset_index()
             leaderboard_df.sort_values(by='points', ascending=False, inplace=True)
-            leaderboard_df['rank'] = leaderboard_df['points'].rank(method='min', ascending=False)
+            leaderboard_df['rank'] = leaderboard_df['points'].rank(method='min', ascending=False).astype(int)
             return leaderboard_df
         else:
             st.error("Expected data columns missing in the race results.")
