@@ -11,7 +11,7 @@ points_dict = {
 } 
 
 def add_bg_and_custom_css():
-    # Adjusting the background image and text container styles with an updated overlay setup
+    # Adjusting the background image directly without using an overlay
     st.markdown(
         """
         <style>
@@ -19,19 +19,7 @@ def add_bg_and_custom_css():
             background-image: url("https://pliki.ppe.pl/storage/39653022149bea4f5935/39653022149bea4f5935-1200w.jpg");
             background-size: cover;
             background-position: center;
-            position: relative;  /* Essential for the overlay to work correctly */
-        }
-
-        /* Correcting the overlay to ensure it does not cover content */
-        .stApp:before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: rgba(255, 255, 255, 0.5);  /* Semi-transparent white overlay */
-            z-index: -1;  /* Setting z-index to 0 or below content z-index */
+            filter: brightness(50%); /* Reducing the brightness of the image to dim it */
         }
 
         .text-container {
@@ -39,8 +27,7 @@ def add_bg_and_custom_css():
             border-radius: 15px;
             padding: 25px;
             margin-bottom: 30px;
-            position: relative;  /* Ensure the text container is above the overlay */
-            z-index: 1;  /* Ensuring content is above the overlay */
+            position: relative;  /* Makes sure the container is properly positioned */
         }
         </style>
         """,
