@@ -15,11 +15,12 @@ def add_custom_css():
         """
         <style>
         .stApp {
-            background-color: #ADD8E6;
+            background-color: #ADD8E6;  # Hellblau als Beispiel
         }
         </style>
         """,
         unsafe_allow_html=True
+    )
 
 def welcome_screen():
     add_custom_css()
