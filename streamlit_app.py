@@ -34,16 +34,18 @@ def welcome_screen():
     add_bg_and_custom_css()
     st.title('Mario Kart: The Ranking App')
     
-    #app description
-    st.write("""
-    Welcome to the Mario Kart: The Ranking App! This interactive application allows you to set up races, register players, and track race results in real-time. Here’s what you can do:
-    
-    - **Register Players**: Add participants to the race and manage your player list.
-    - **Record Race Results**: After each race, input the results to see who's leading.
-    - **View Leaderboard**: Check out the leaderboard to see rankings and find out who's on top in the Mario Kart championship.
-    
-    Whether you're hosting a Mario Kart tournament or just having fun with friends, this app will make managing and displaying results easy and fun. Get started by registering players and let the races begin!
-    """)
+    # Using Streamlit's markdown with unsafe_allow_html to embed HTML for styling
+    st.markdown("""
+        <div class="text-container">
+            <p>Welcome to the <strong>Mario Kart: The Ranking App</strong>! This interactive application allows you to set up races, register players, and track race results in real-time. Here’s what you can do:</p>
+            <ul>
+                <li><strong>Register Players:</strong> Add participants to the race and manage your player list.</li>
+                <li><strong>Record Race Results:</strong> After each race, input the results to see who's leading.</li>
+                <li><strong>View Leaderboard:</strong> Check out the leaderboard to see rankings and find out who's on top in the Mario Kart championship.</li>
+            </ul>
+            <p>Whether you're hosting a Mario Kart tournament or just having fun with friends, this app will make managing and displaying results easy and fun. Get started by registering players and let the races begin!</p>
+        </div>
+    """, unsafe_allow_html=True)
     
     if st.button('Go to Registration'):
         st.session_state.current_screen = 'register'
