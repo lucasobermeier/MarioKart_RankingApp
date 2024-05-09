@@ -93,12 +93,19 @@ if 'race_results' not in st.session_state:
     st.session_state.race_results = []
 
 def calculate_total_points():
-    df = pd.DataFrame(race_results)
-    # Ensuring the DataFrame is properly aggregated
-    leaderboard_df = df.groupby('username')['points'].sum().reset_index()
-    leaderboard_df.sort_values(by='points', ascending=False, inplace=True)
-    leaderboard_df['Rank'] = leaderboard_df['points'].rank(method='min', ascending=False)
-    return leaderboard_df
+    if st.session_state.race_results:  # Ensure there is data to process
+        df = pd.DataFrame(st.session_state.race_results)
+        if 'username' in df.columns and 'points' in df.columns:  # Ensure the expected columns are present
+            leaderboard_df = df.groupby('username')['points'].sum().reset_index()
+            leaderboard_df.sort_values(by='points', ascending=False, inplace=True)
+            leaderboard_df['Rank'] = leaderboard_df['points'].rank(method='min', ascending=False)
+            return leaderboard_df
+        else:
+            st.error("Expected data columns missing in the race results.")
+            return pd.DataFrame(columns=['Username', 'Total Points', 'Rank'])
+    else:
+        st.warning("No race results available yet.")
+        return pd.DataFrame(columns=['Username', 'Total Points', 'Rank'])
 
 def view_leaderboard_screen():
     st.title('View Leaderboard')
@@ -108,7 +115,6 @@ def view_leaderboard_screen():
         st.session_state.pop('total_races', None)
         st.session_state.pop('current_race', None)
         st.session_state.pop('race_results', None)
-        st.session_state.pop('game_master', None, None)
         users.clear()
         st.session_state.current_screen = 'welcome'
     if st.button('Quit Game'):
