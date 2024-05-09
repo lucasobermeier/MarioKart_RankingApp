@@ -19,7 +19,6 @@ def add_bg_and_custom_css():
             background-image: url("https://pliki.ppe.pl/storage/39653022149bea4f5935/39653022149bea4f5935-1200w.jpg");
             background-size: cover;
             background-position: center;
-            filter: brightness(50%); /* Reducing the brightness of the image to dim it */
         }
 
         .text-container {
