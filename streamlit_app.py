@@ -10,7 +10,19 @@ points_dict = {
     1: 15, 2: 12, 3: 10, 4: 8, 5: 7, 6: 6, 7: 5, 8: 4, 9: 3, 10: 2, 11: 1, 12: 0
 }
 
+def add_custom_css():
+    st.markdown(
+        """
+        <style>
+        .stApp {
+            background-color: #ADD8E6;
+        }
+        </style>
+        """,
+        unsafe_allow_html=True
+
 def welcome_screen():
+    add_custom_css()
     st.title('Mario Kart: The Ranking App')
     
     #app description
