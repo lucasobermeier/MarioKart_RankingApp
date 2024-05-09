@@ -18,6 +18,7 @@ def add_bg_and_custom_css():
         .stApp {
             background-image: url("https://pliki.ppe.pl/storage/39653022149bea4f5935/39653022149bea4f5935-1200w.jpg");
             background-size: cover;
+            background-position: center;
         }
         .text-container {
             background-color: rgba(255, 255, 255, 0.5);  # Weiß mit 50% Transparenz
@@ -28,7 +29,6 @@ def add_bg_and_custom_css():
         """,
         unsafe_allow_html=True
     )
-
 
 def welcome_screen():
     add_bg_and_custom_css()
