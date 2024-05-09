@@ -21,9 +21,9 @@ def add_bg_and_custom_css():
             background-position: center;
         }
         .text-container {
-            background-color: rgba(255, 255, 255, 0.8);
-            border-radius: 10px;
-            padding: 10px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 5px;
+            padding: 5px;
         }
         </style>
         """,
