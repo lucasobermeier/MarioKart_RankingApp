@@ -172,7 +172,7 @@ def view_leaderboard_screen():
         st.session_state.pop('current_race', None)
         st.session_state.pop('race_results', None)
         users.clear()
-        st.session_state.current_screen = 'welcome'
+        st.session_state.current_screen = 'register'
     if st.button('Quit Game'):
         st.session_state.current_screen = 'welcome'
 
