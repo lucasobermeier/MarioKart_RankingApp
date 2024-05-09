@@ -60,7 +60,9 @@ def register_user(username):
         return False
 
 def register_user_screen():
-    add_bg_and_custom_css() 
+    add_bg_and_custom_css()  # Ensure this calls the function that sets the background image
+    
+    # Adding custom CSS for text input and table styling
     st.markdown(
         """
         <style>
@@ -93,7 +95,6 @@ def register_user_screen():
             st.session_state.current_screen = 'add_results'
         else:
             st.error("Please register at least one user before starting the race.")
-
 
 def add_race_result_screen():
     add_bg_and_custom_css()
