@@ -76,7 +76,7 @@ def register_user(username):
         return False
 
 def register_user_screen():
-    add_bg():   # Ensure this calls the function that sets the background image
+    add_bg()   # Ensure this calls the function that sets the background image
     
     st.title('Register a New User')
     new_username = st.text_input("Enter a new username to register:")
