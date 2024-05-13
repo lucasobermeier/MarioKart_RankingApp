@@ -9,9 +9,6 @@ points_dict = {
     1: 15, 2: 12, 3: 10, 4: 8, 5: 7, 6: 6, 7: 5, 8: 4, 9: 3, 10: 2, 11: 1, 12: 0
 } 
 
-#Initial setup for the session state of the app
-setup_app()
-
 def setup_app():
     # Initialize session state for users list
     if 'users' not in st.session_state: 
@@ -24,6 +21,9 @@ def setup_app():
     # Initialize session state for navigation
     if 'current_screen' not in st.session_state:
         st.session_state.current_screen = 'welcome'
+
+#Initial setup for the session state of the app
+setup_app()
 
 #Only for UI Design reasons
 def welcome_bg_and_custom_css():
