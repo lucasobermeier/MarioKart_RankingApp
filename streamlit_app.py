@@ -61,8 +61,7 @@ def add_bg():
         unsafe_allow_html=True
     )
     
-#Ausgelagerte Funktionen für...
-
+#Outsourced function for user registration and point calculation for more clarity
 def register_user(username):
     if username not in st.session_state.users:
         st.session_state.users.append(username)
@@ -87,7 +86,9 @@ def calculate_total_points():
         return pd.DataFrame(columns=['Username', 'Total Points', 'Rank'])
 
 
-#Screens Logic...
+# Screen functions: Responsible for displaying different user interfaces of the app. 
+# Each function represents an independent screen and controls the specific interactions (and the program logic behind) and layout.
+
 def welcome_screen():
     welcome_bg_and_custom_css()
     st.title('Mario Kart: The Ranking App')
