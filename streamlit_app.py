@@ -19,7 +19,7 @@ def setup_app():
         
     #Initialize session state for race results
     if 'race_results' not in st.session_state:
-    st.session_state.race_results = []
+        st.session_state.race_results = []
     
     # Initialize session state for navigation
     if 'current_screen' not in st.session_state:
