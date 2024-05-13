@@ -1,6 +1,8 @@
-# Welcome to Streamlit!
+# Mario Kart Ranking App
 
-Edit `/streamlit_app.py` to customize this app to your heart's desire. :heart:
+## Setup
 
-If you have any questions, checkout our [documentation](https://docs.streamlit.io) and [community
-forums](https://discuss.streamlit.io).
+To run this app, you need to install the required Python packages:
+
+```bash
+pip install -r requirements.txt
