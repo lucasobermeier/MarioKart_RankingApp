@@ -86,7 +86,6 @@ def calculate_total_points():
 
 # Screen functions: Responsible for displaying different user interfaces of the app. 
 # Each function represents an independent screen and controls the specific interactions (and the program logic behind) and layout.
-
 def welcome_screen():
     welcome_bg_and_custom_css()
     st.title('Mario Kart: The Ranking App')
@@ -186,7 +185,6 @@ def view_leaderboard_screen():
         st.session_state.current_screen = 'register'
     if st.button('Quit Game'):
         st.session_state.current_screen = 'welcome'
-
 
 #Render the current screen based on the session state
 if st.session_state.current_screen == 'welcome':
