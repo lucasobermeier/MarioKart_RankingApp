@@ -5,9 +5,7 @@ import random
 #Global Variables for Data Storage
 users = []
 race_results = []
-points_dict = {
-    1: 15, 2: 12, 3: 10, 4: 8, 5: 7, 6: 6, 7: 5, 8: 4, 9: 3, 10: 2, 11: 1, 12: 0
-} 
+points_dict = {1: 15, 2: 12, 3: 10, 4: 8, 5: 7, 6: 6, 7: 5, 8: 4, 9: 3, 10: 2, 11: 1, 12: 0} #Points according to the official MarioKart Game
 
 def setup_app():
     # Initialize session state for users list
