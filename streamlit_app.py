@@ -44,7 +44,7 @@ def welcome_bg_and_custom_css():
         """,
         unsafe_allow_html=True
     )
-
+#Adding a backround image troughout the app
 def add_bg(): 
     st.markdown(
         """
@@ -177,7 +177,7 @@ def view_leaderboard_screen():
     st.title('Final Leaderboard')
     leaderboard_df = calculate_total_points()
     st.table(leaderboard_df)
-    if st.button('Reset Game'):
+    if st.button('Reset Races'):
         st.session_state.pop('total_races', None)
         st.session_state.pop('current_race', None)
         st.session_state.pop('race_results', None)
