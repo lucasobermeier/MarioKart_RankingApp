@@ -61,26 +61,29 @@ def add_bg():
     
 #Outsourced function for user registration and point calculation for more clarity
 def register_user(username):
+    # Check if the username is not already in the session state users list
     if username not in st.session_state.users:
+        # Add the new username to the session state users lis
         st.session_state.users.append(username)
         return True
     else:
-        st.error(f"Error: A user with the username '{username}' already exists.")
+        #Display an error message if the username already exists
+        st.error(f"Error: A user with the username '{username}' already exists.")  
         return False
 
 def calculate_total_points():
     if st.session_state.race_results:  # Ensure there is data to process
-        df = pd.DataFrame(st.session_state.race_results)
-        if 'username' in df.columns and 'points' in df.columns:  # Ensure the expected columns are present
-            leaderboard_df = df.groupby('username')['points'].sum().reset_index()
-            leaderboard_df.sort_values(by='points', ascending=False, inplace=True)
-            leaderboard_df['rank'] = leaderboard_df['points'].rank(method='min', ascending=False).astype(int)
+        df = pd.DataFrame(st.session_state.race_results) # Convert race results from session state into a DataFrame
+        if 'username' in df.columns and 'points' in df.columns:  # Check if the expected columns 'username' and 'points' are in the DataFrame
+            leaderboard_df = df.groupby('username')['points'].sum().reset_index() # Group by username and sum the points for each user
+            leaderboard_df.sort_values(by='points', ascending=False, inplace=True) # Sort the DataFrame by points in descending order
+            leaderboard_df['rank'] = leaderboard_df['points'].rank(method='min', ascending=False).astype(int) # Assign ranks based on the total points, with the highest points getting rank 1
             return leaderboard_df
         else:
-            st.error("Expected data columns missing in the race results.")
+            st.error("Expected data columns missing in the race results.") # Display an error if the expected columns are missing
             return pd.DataFrame(columns=['Username', 'Total Points', 'Rank'])
     else:
-        st.warning("No race results available yet.")
+        st.warning("No race results available yet.") # Display a warning if there are no race results available
         return pd.DataFrame(columns=['Username', 'Total Points', 'Rank'])
 
 
@@ -115,7 +118,7 @@ def register_user_screen():
     start_racing_button = st.button("Let's start racing")
 
     if register_button:
-        if register_user(new_username):
+        if register_user(new_username): # register_user() returns true if user is sucessfully registered
             st.success("User registered successfully")
     
     #Display registered users table
@@ -175,16 +178,17 @@ def add_race_result_screen():
 def view_leaderboard_screen():
     add_bg()
     st.title('Final Leaderboard')
-    leaderboard_df = calculate_total_points()
-    st.table(leaderboard_df)
+    leaderboard_df = calculate_total_points()  # Calculate and get the leaderboard
+    st.table(leaderboard_df) # Display leaderboard as a table
     if st.button('Reset Races'):
+        # Reset session state variables and clear users
         st.session_state.pop('total_races', None)
         st.session_state.pop('current_race', None)
         st.session_state.pop('race_results', None)
         users.clear()
         st.session_state.current_screen = 'register'
     if st.button('Quit Game'):
-        st.session_state.current_screen = 'welcome'
+        st.session_state.current_screen = 'welcome' # Change screen to welcome
 
 #Render the current screen based on the session state
 if st.session_state.current_screen == 'welcome':
